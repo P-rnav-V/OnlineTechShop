@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thank You</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div style="text-align: right;">
+        Logged in as: <strong>{{ username }}</strong>
+        <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+    </div>
+
+    <div class="thank-you-message">
+        <h1>THANK YOU FOR SHOPPING WITH US</h1>
+    </div>
+
+    <a href="{{ url_for('galleryPage') }}"><button>Back to Home Page</button></a>
+</body>
+</html>

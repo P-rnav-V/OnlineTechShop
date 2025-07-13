@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TechMart Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <div class="header-section">
+
+        <h1>TechMart Online</h1>
+        <h2>Welcome to the world's most advanced tech shop!</h2>
+    </div>
+</head>
+<body>
+    <div style="text-align: right;">
+        Logged in as: <strong>{{ username }}</strong>
+        <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+        <a href="{{ url_for('basketPage') }}"><button>View Basket</button></a>
+    </div>
+
+
+    <form method="GET" action="{{ url_for('galleryPage') }}">
+        <input type="text" name="search" placeholder="Search item...">
+        <select name="sort">
+            <option value="">Sort by</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="name_asc">Name: A to Z</option>
+            <option value="name_desc">Name: Z to A</option>
+            <option value="env_LowToHigh">Environmental impacts: Low to High</option>
+            <option value="env_HighToLow">Environmental impacts: High to Low</option>
+        </select>
+        <button type="submit">Apply</button>
+    </form>
+
+    {% for item in itemsForSale %}
+        <div class="product-container">
+            <h3>{{ item.name }}</h3>
+            <img src="{{ url_for('static', filename=item.image) }}" width="200">
+            <p>Price: ${{ item.price }}</p>
+            <p>Environmental Impact: {{ item.envImpactsValue }} {{ item.environmental_impact }}</p>
+            <a href="{{ url_for('singleProductPage', itemId=item.id) }}"><button>View Product</button></a>
+            
+            <form method="POST" action="{{ url_for('addToBasket', item_id=item.id) }}">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1" required>
+                <button type="submit">Add to Basket</button>
+            </form>
+        </div>
+        <hr>
+    {% endfor %}
+
+    <a href="{{ url_for('basketPage') }}"><button>View Basket</button></a>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <h1>Welcome To TechMart Online!</h1>
+    <h2>The world's most advanced tech shop!</h2>
+    <br><br>
+
+    <script>
+    function validateLogin(event) {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+
+        const errorBox = document.getElementById("errorBox");
+        errorBox.innerHTML = "";
+
+        let errors = [];
+
+        if (username === "") {
+            errors.push("Username is required.");
+        }
+
+        if (password.length < 8) {
+            errors.push("Password must be at least 8 characters long.");
+        }
+
+        if (errors.length > 0) {
+            event.preventDefault();
+            errorBox.innerHTML = errors.join("<br>");
+        }
+    }
+    </script>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="POST" action="{{ url_for('login') }}" onsubmit="validateLogin(event)">
+        <label>Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label>Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <div id="errorBox" style="color:red;"></div><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Basket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div style="text-align: right;">
+        Logged in as: <strong>{{ username }}</strong>
+        <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+    </div>
+
+    <h1>Your Basket</h1>
+
+    {% if basket_items %}
+        <ul style="list-style-type: none; padding: 0;">
+        {% for entry in basket_items %}
+            <li style="margin-bottom: 20px;">
+                <img src="{{ url_for('static', filename=entry.item.image) }}" alt="{{ entry.item.name }}" width="150"><br>
+                <strong>{{ entry.item.name }}</strong> ({{ entry.quantity }}) - ${{ entry.total_price }}
+                <form method="GET" action="{{ url_for('removeFromBasket', item_id=entry.item.id) }}" style="display:inline;">
+                    <button type="submit">Remove One</button>
+                </form>
+            </li>
+        {% endfor %}
+        </ul>
+
+        <h3>Total: ${{ total_price }}</h3>
+
+        <br>
+        <a href="{{ url_for('checkoutPage') }}"><button>Go to Checkout</button></a>
+    {% else %}
+        <p>Your basket is empty.</p>
+    {% endif %}
+
+    <a href="{{ url_for('galleryPage') }}"><button>Back to Home Page</button></a>
+</body>
+</html>
